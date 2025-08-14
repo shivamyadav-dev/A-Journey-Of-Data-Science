@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+	<h2 class="section-header">Contact Us</h2>
+	<div class="row g-4 mt-1">
+		<div class="col-lg-7">
+			<form method="post" class="bg-white rounded-4 shadow p-3">
+				<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+				<div class="mb-3">
+					<label class="form-label">Name</label>
+					<input class="form-control" name="name" required>
+				</div>
+				<div class="mb-3">
+					<label class="form-label">Email</label>
+					<input type="email" class="form-control" name="email" required>
+				</div>
+				<div class="mb-3">
+					<label class="form-label">Message</label>
+					<textarea class="form-control" rows="4" name="message" required></textarea>
+				</div>
+				<button class="btn btn-primary">Send Message</button>
+			</form>
+		</div>
+		<div class="col-lg-5">
+			<div class="bg-white rounded-4 shadow p-3">
+				<h6>Contact Information</h6>
+				<ul class="list-unstyled small">
+					<li><i class="fa-solid fa-envelope me-2"></i> info@brewandsip.com</li>
+					<li><i class="fa-solid fa-phone me-2"></i> +1 (555) 123-4567</li>
+					<li><i class="fa-solid fa-location-dot me-2"></i> 123 Brew Street, Bean City</li>
+				</ul>
+				<div class="ratio ratio-16x9 mt-2">
+					<iframe src="https://www.openstreetmap.org/export/embed.html?bbox=&layer=mapnik" title="Map"></iframe>
+				</div>
+			</div>
+			<div class="bg-white rounded-4 shadow p-3 mt-3">
+				<h6>FAQ</h6>
+				<p class="small"><strong>Q:</strong> What is your delivery area?<br><strong>A:</strong> 10-mile radius from our store with a 30-minute promise.</p>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
