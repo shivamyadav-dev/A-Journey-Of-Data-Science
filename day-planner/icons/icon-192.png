@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <rect width="192" height="192" rx="24" fill="#0ea5e9"/>
+  <circle cx="96" cy="96" r="70" fill="#0b1220"/>
+  <text x="96" y="112" font-size="72" text-anchor="middle" fill="#e2e8f0" font-family="Segoe UI, Roboto, Arial">🎯</text>
+</svg>

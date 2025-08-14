@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Focus Day Planner</title>
+    <meta name="theme-color" content="#0ea5e9">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" href="./icons/icon-192.png">
+    <link rel="apple-touch-icon" href="./icons/icon-192.png">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <span class="logo">🎯</span>
+        <span class="title">Focus Day Planner</span>
+      </div>
+      <div class="scorebar">
+        <div class="score-item" id="pointsDisplay">Points: 0</div>
+        <div class="score-item" id="streakDisplay">Streak: 0🔥</div>
+        <button class="btn small" id="installBtn" title="Install app">⬇️ Install</button>
+        <button class="btn small" id="exportBtn" title="Export data">⬆️ Export</button>
+        <label class="file-input">
+          ⬇️ Import
+          <input type="file" id="importInput" accept="application/json">
+        </label>
+      </div>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="today">Today</button>
+      <button class="tab" data-tab="roadmap">Roadmap</button>
+      <button class="tab" data-tab="stats">Stats</button>
+      <button class="tab" data-tab="settings">Settings</button>
+    </nav>
+
+    <main class="tab-content">
+      <section id="tab-today" class="tab-panel active">
+        <div class="toolbar">
+          <div class="date-bar">
+            <button class="btn" id="prevDayBtn">◀</button>
+            <input type="date" id="datePicker">
+            <button class="btn" id="nextDayBtn">▶</button>
+          </div>
+          <div class="actions">
+            <button class="btn primary" id="autoPlanBtn" title="Auto-plan day">⚡ Plan My Day</button>
+            <button class="btn" id="newTaskBtn">＋ Add Task</button>
+          </div>
+        </div>
+
+        <div id="timeline" class="timeline"></div>
+
+        <dialog id="taskDialog">
+          <form method="dialog" id="taskForm">
+            <h3 id="taskDialogTitle">Add Task</h3>
+            <div class="grid">
+              <label>Title
+                <input required type="text" id="taskTitle">
+              </label>
+              <label>Category
+                <select id="taskCategory">
+                  <option>Deep Work</option>
+                  <option>Study</option>
+                  <option>Typing</option>
+                  <option>Communication</option>
+                  <option>Health</option>
+                  <option>Break</option>
+                  <option>Personal</option>
+                  <option>Tuition</option>
+                  <option>Meal</option>
+                  <option>Commute</option>
+                </select>
+              </label>
+              <label>Start
+                <input type="time" id="taskStart">
+              </label>
+              <label>End
+                <input type="time" id="taskEnd">
+              </label>
+              <label>Duration (min)
+                <input type="number" id="taskDuration" min="5" step="5">
+              </label>
+              <label>Points
+                <input type="number" id="taskPoints" min="0" step="5">
+              </label>
+              <label class="checkbox">
+                <input type="checkbox" id="taskFixed"> Fixed time
+              </label>
+            </div>
+            <menu class="dialog-actions">
+              <button class="btn" value="cancel">Cancel</button>
+              <button class="btn primary" id="saveTaskBtn" value="default">Save</button>
+            </menu>
+          </form>
+        </dialog>
+
+        <dialog id="timerDialog">
+          <div class="timer">
+            <h3 id="timerTaskTitle">Focus Timer</h3>
+            <div class="timer-display" id="timerDisplay">25:00</div>
+            <div class="timer-controls">
+              <button class="btn" id="startTimerBtn">Start</button>
+              <button class="btn" id="pauseTimerBtn">Pause</button>
+              <button class="btn" id="resetTimerBtn">Reset</button>
+            </div>
+            <div class="timer-mode">
+              <button class="btn small" data-mode="work">Work</button>
+              <button class="btn small" data-mode="short">Short Break</button>
+              <button class="btn small" data-mode="long">Long Break</button>
+            </div>
+          </div>
+        </dialog>
+      </section>
+
+      <section id="tab-roadmap" class="tab-panel">
+        <div class="roadmap-header">
+          <h3>6-Month Data Science Roadmap</h3>
+          <div class="roadmap-controls">
+            <label>Start Date
+              <input type="date" id="roadmapStartDate">
+            </label>
+            <button class="btn" id="rebuildRoadmapBtn">Rebuild Roadmap</button>
+          </div>
+        </div>
+        <div id="roadmapList" class="roadmap-list"></div>
+      </section>
+
+      <section id="tab-stats" class="tab-panel">
+        <div class="stats-cards">
+          <div class="card">
+            <div class="card-title">This Week</div>
+            <div class="metric" id="weekPoints">0 pts</div>
+          </div>
+          <div class="card">
+            <div class="card-title">Last 7 Days</div>
+            <div class="mini-bars" id="last7Bars"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">Focus Sessions</div>
+            <div class="metric" id="focusSessionsMetric">0</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-settings" class="tab-panel">
+        <h3>Daily Anchors (India Standard Time)</h3>
+        <div class="grid">
+          <label>Wake Time
+            <input type="time" id="wakeTime">
+          </label>
+          <label>Sleep Time
+            <input type="time" id="sleepTime">
+          </label>
+          <label>Breakfast
+            <input type="time" id="breakfastTime">
+          </label>
+          <label>Lunch
+            <input type="time" id="lunchTime">
+          </label>
+          <label>Dinner
+            <input type="time" id="dinnerTime">
+          </label>
+          <label>Tuition Start
+            <input type="time" id="tuitionStart">
+          </label>
+          <label>Tuition End
+            <input type="time" id="tuitionEnd">
+          </label>
+          <label>Typing Practice (min)
+            <input type="number" id="typingMinutes" min="10" step="5">
+          </label>
+          <label>Communication Practice (min)
+            <input type="number" id="communicationMinutes" min="10" step="5">
+          </label>
+        </div>
+
+        <h3>Timer</h3>
+        <div class="grid">
+          <label>Work (min)
+            <input type="number" id="pomodoroWork" min="15" step="5">
+          </label>
+          <label>Short Break (min)
+            <input type="number" id="pomodoroShort" min="3" step="1">
+          </label>
+          <label>Long Break (min)
+            <input type="number" id="pomodoroLong" min="10" step="5">
+          </label>
+        </div>
+
+        <div class="settings-actions">
+          <button class="btn" id="resetDataBtn">Reset Data</button>
+          <button class="btn primary" id="saveSettingsBtn">Save Settings</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <span>Made for India • Offline-ready PWA • Stay consistent 💪</span>
+    </footer>
+
+    <script src="./script.js" defer></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+        });
+      }
+    </script>
+  </body>
+</html>
