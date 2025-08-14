@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+	<div class="row g-4">
+		<div class="col-md-6">
+			<img class="img-fluid rounded-4 shadow" src="https://source.unsplash.com/900x700/?{{ 'tea' if product.category=='Tea' else 'coffee' }}" alt="{{ product.name }}">
+		</div>
+		<div class="col-md-6">
+			<h2 style="font-family: 'Playfair Display', serif;">{{ product.name }}</h2>
+			<div class="d-flex gap-2 mt-1">
+				<span class="badge badge-category">{{ product.category }}</span>
+				<span class="badge badge-type">{{ product.product_type }}</span>
+			</div>
+			<p class="lead mt-3">{{ product.description }}</p>
+			<div class="h4">{{ product.price|currency }}</div>
+			<div class="d-flex gap-2 mt-3">
+				<button class="btn btn-primary" onclick="BREW.addToCart({{ product.id }}, 1)"><i class="fa-solid fa-cart-plus me-1"></i>Add to Cart</button>
+				<a class="btn btn-outline-secondary" href="{{ url_for('menu') }}">Back to Menu</a>
+			</div>
+		</div>
+	</div>
+
+	<ul class="nav nav-tabs mt-4" id="productTabs" role="tablist">
+		<li class="nav-item" role="presentation">
+			<button class="nav-link active" id="desc-tab" data-bs-toggle="tab" data-bs-target="#desc" type="button" role="tab">Description</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button class="nav-link" id="brew-tab" data-bs-toggle="tab" data-bs-target="#brew" type="button" role="tab">Brewing Guide</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab">Reviews</button>
+		</li>
+	</ul>
+	<div class="tab-content p-3 bg-white border border-top-0 rounded-bottom">
+		<div class="tab-pane fade show active" id="desc" role="tabpanel">
+			<p>{{ product.description }}</p>
+		</div>
+		<div class="tab-pane fade" id="brew" role="tabpanel">
+			<ul>
+				<li>Water temperature: {{ '80-85°C' if product.category=='Tea' else '92-96°C' }}</li>
+				<li>Ratio: 1:15 (coffee) or 2g per 100ml (tea)</li>
+				<li>Time: 3-4 minutes (tea) / 2-4 minutes (coffee methods)</li>
+			</ul>
+		</div>
+		<div class="tab-pane fade" id="reviews" role="tabpanel">
+			<p class="small-muted">Reviews coming soon.</p>
+		</div>
+	</div>
+
+	<h4 class="mt-4">Related</h4>
+	<div class="row g-4">
+		{% for p in related %}
+			<div class="col-12 col-sm-6 col-lg-3">
+				<div class="card product-card h-100">
+					<img class="product-img" src="https://source.unsplash.com/600x400/?{{ 'tea' if p.category=='Tea' else 'coffee' }}" alt="{{ p.name }}">
+					<div class="card-body">
+						<h5 class="card-title">{{ p.name }}</h5>
+						<div class="d-flex justify-content-between align-items-center mt-2">
+							<span class="fw-semibold">{{ p.price|currency }}</span>
+							<div class="btn-group">
+								<a href="{{ url_for('product_detail', product_id=p.id) }}" class="btn btn-sm btn-outline-secondary">Details</a>
+								<button class="btn btn-sm btn-primary" onclick="BREW.addToCart({{ p.id }}, 1)">Add</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

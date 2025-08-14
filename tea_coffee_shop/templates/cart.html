@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+	<h2 class="section-header">Your Cart</h2>
+	{% if not items %}
+		<div class="alert alert-info mt-3">Your cart is empty. <a href="{{ url_for('menu') }}">Browse the menu</a>.</div>
+	{% else %}
+		<form method="post" action="{{ url_for('cart_update') }}">
+			<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+			<table class="table align-middle bg-white shadow-sm rounded-3 mt-3">
+				<thead>
+					<tr>
+						<th>Product</th>
+						<th>Price</th>
+						<th style="width: 140px;">Qty</th>
+						<th>Subtotal</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in items %}
+						<tr>
+							<td>
+								<div class="d-flex align-items-center">
+									<img src="https://source.unsplash.com/80x80/?{{ 'tea' if item.product.category=='Tea' else 'coffee' }}" class="rounded me-2" alt="{{ item.product.name }}">
+									<div>
+										<div class="fw-semibold">{{ item.product.name }}</div>
+										<div class="small-muted">{{ item.product.category }} • {{ item.product.product_type }}</div>
+									</div>
+								</div>
+							</td>
+							<td>{{ item.product.price|currency }}</td>
+							<td>
+								<input type="number" class="form-control" name="qty_{{ item.product.id }}" min="0" value="{{ item.quantity }}">
+							</td>
+							<td>{{ item.subtotal|currency }}</td>
+							<td>
+								<button class="btn btn-sm btn-outline-danger" type="submit" formaction="{{ url_for('cart_remove') }}" formmethod="post" name="product_id" value="{{ item.product.id }}">
+									<i class="fa-solid fa-trash"></i>
+								</button>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<div class="d-flex justify-content-between align-items-center">
+				<a href="{{ url_for('menu') }}" class="btn btn-outline-secondary">Continue Shopping</a>
+				<div>
+					<span class="me-3 fw-semibold">Total: {{ total|currency }}</span>
+					<button class="btn btn-primary">Update Cart</button>
+					<a href="{{ url_for('checkout') }}" class="btn btn-accent ms-2">Checkout</a>
+				</div>
+			</div>
+		</form>
+	{% endif %}
+</div>
+{% endblock %}

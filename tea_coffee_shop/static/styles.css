@@ -1,0 +1,117 @@
+/* Brew & Sip - Custom Styles */
+:root {
+	--color-primary: #8B4513;
+	--color-secondary: #D2691E;
+	--color-accent: #FFD700;
+	--color-bg: #FFF8F0;
+	--color-text: #3b2f2f;
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+	font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+	background: var(--color-bg);
+	color: var(--color-text);
+}
+
+.navbar-brand {
+	font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+	font-weight: 700;
+	letter-spacing: 0.5px;
+}
+
+.btn-primary {
+	background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+	border: none;
+}
+
+.btn-primary:hover {
+	filter: brightness(1.05);
+}
+
+.btn-accent {
+	background: var(--color-accent);
+	color: #221;
+	border: none;
+}
+
+.section-header {
+	background: linear-gradient(90deg, rgba(139,69,19,0.15), rgba(210,105,30,0.15));
+	padding: 0.5rem 1rem;
+	border-radius: 12px;
+	display: inline-block;
+}
+
+.hero {
+	background: radial-gradient(1200px 600px at 10% 0%, rgba(139,69,19,0.10), transparent),
+		linear-gradient(180deg, rgba(210,105,30,0.08), transparent 60%);
+	border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+.card.product-card {
+	border: none;
+	border-radius: 16px;
+	box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+	transition: transform 180ms ease, box-shadow 180ms ease;
+	background: #fff;
+}
+
+.card.product-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+.product-img {
+	border-top-left-radius: 16px;
+	border-top-right-radius: 16px;
+	height: 200px;
+	object-fit: cover;
+	background: linear-gradient(135deg, rgba(139,69,19,0.15), rgba(210,105,30,0.15));
+}
+
+.badge-category {
+	background: rgba(139,69,19,0.12);
+	color: var(--color-primary);
+	border: 1px solid rgba(139,69,19,0.25);
+}
+
+.badge-type {
+	background: rgba(210,105,30,0.12);
+	color: var(--color-secondary);
+	border: 1px solid rgba(210,105,30,0.25);
+}
+
+footer {
+	border-top: 1px solid rgba(0,0,0,0.08);
+	background: #fff;
+}
+
+.progress-step {
+	height: 8px;
+	background: rgba(139,69,19,0.15);
+	border-radius: 999px;
+}
+
+.progress-step .bar {
+	height: 100%;
+	width: 0%;
+	background: linear-gradient(90deg, var(--color-secondary), var(--color-accent));
+	border-radius: inherit;
+	transition: width 600ms ease;
+}
+
+.small-muted {
+	color: #6c757d;
+	font-size: 0.925rem;
+}
+
+.sticky-actions {
+	position: sticky;
+	bottom: 0;
+	z-index: 10;
+	background: linear-gradient(180deg, transparent, #fff 30%);
+	padding-top: 0.5rem;
+}

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+	<h2 class="section-header">Checkout</h2>
+	<div class="row g-4 mt-1">
+		<div class="col-lg-7">
+			<form method="post">
+				<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+				<div class="row g-3">
+					<div class="col-md-6">
+						<label class="form-label">Full Name</label>
+						<input class="form-control" name="name" required>
+					</div>
+					<div class="col-md-6">
+						<label class="form-label">Email</label>
+						<input type="email" class="form-control" name="email" required>
+					</div>
+					<div class="col-md-6">
+						<label class="form-label">Phone</label>
+						<input class="form-control" name="phone" required>
+					</div>
+					<div class="col-md-6">
+						<label class="form-label">Delivery Option</label>
+						<select class="form-select" name="delivery_option">
+							<option>Instant Delivery</option>
+							<option>Fresh Brew</option>
+							<option>Contactless Delivery</option>
+						</select>
+					</div>
+					<div class="col-12">
+						<label class="form-label">Delivery Address</label>
+						<textarea class="form-control" rows="3" name="address" required></textarea>
+					</div>
+					<div class="col-12">
+						<label class="form-label">Payment Method</label>
+						<select class="form-select" disabled>
+							<option>Cash on Delivery (default)</option>
+						</select>
+						<div class="small-muted">Payment gateway integration coming soon.</div>
+					</div>
+				</div>
+				<div class="sticky-actions mt-3">
+					<button class="btn btn-primary btn-lg"><i class="fa-solid fa-check me-2"></i>Place Order</button>
+				</div>
+			</form>
+		</div>
+		<div class="col-lg-5">
+			<div class="bg-white rounded-4 shadow p-3">
+				<h5>Order Summary</h5>
+				<hr>
+				{% for item in items %}
+					<div class="d-flex justify-content-between align-items-center mb-2">
+						<div>
+							<div class="fw-semibold">{{ item.product.name }}</div>
+							<div class="small-muted">x {{ item.quantity }}</div>
+						</div>
+						<div>{{ item.subtotal|currency }}</div>
+					</div>
+				{% endfor %}
+				<hr>
+				<div class="d-flex justify-content-between align-items-center">
+					<div class="fw-semibold">Total</div>
+					<div class="fw-semibold">{{ total|currency }}</div>
+				</div>
+				<div class="small-muted mt-2">
+					<i class="fa-solid fa-truck me-1"></i> 30-minute delivery promise within 10 miles.
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

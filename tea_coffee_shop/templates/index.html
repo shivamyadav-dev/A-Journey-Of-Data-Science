@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero py-5">
+	<div class="container py-4">
+		<div class="row align-items-center g-4">
+			<div class="col-lg-6">
+				<h1 class="display-5 fw-bold" style="font-family: 'Playfair Display', serif;">Premium Teas &amp; Coffees, Delivered Fast</h1>
+				<p class="lead mt-3">Savor exquisite brews crafted fresh to order. Instant delivery in 30 minutes within 10 miles.</p>
+				<div class="d-flex gap-2 mt-3">
+					<a href="{{ url_for('menu') }}" class="btn btn-primary btn-lg"><i class="fa-solid fa-mug-hot me-2"></i>Explore Menu</a>
+					<a href="#services" class="btn btn-outline-secondary btn-lg"><i class="fa-solid fa-bolt me-2"></i>Instant Delivery</a>
+				</div>
+			</div>
+			<div class="col-lg-6 text-center">
+				<img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600&auto=format&fit=crop" alt="Coffee" class="img-fluid rounded-4 shadow">
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="py-5">
+	<div class="container">
+		<div class="d-flex align-items-center justify-content-between mb-3">
+			<h2 class="section-header">Featured Brews</h2>
+			<a class="btn btn-link" href="{{ url_for('menu') }}">View all</a>
+		</div>
+		<div class="row g-4">
+			{% for p in featured %}
+				<div class="col-12 col-sm-6 col-lg-3">
+					<div class="card product-card h-100">
+						<img class="product-img" src="https://source.unsplash.com/600x400/?{{ 'tea' if p.category=='Tea' else 'coffee' }}" alt="{{ p.name }}">
+						<div class="card-body">
+							<div class="d-flex justify-content-between align-items-start">
+								<h5 class="card-title">{{ p.name }}</h5>
+								<span class="badge badge-category">{{ p.category }}</span>
+							</div>
+							<p class="small mt-2">{{ p.description[:80] }}{% if p.description|length > 80 %}...{% endif %}</p>
+							<div class="d-flex justify-content-between align-items-center mt-3">
+								<span class="fw-semibold">{{ p.price|currency }}</span>
+								<div class="btn-group">
+									<a href="{{ url_for('product_detail', product_id=p.id) }}" class="btn btn-sm btn-outline-secondary">Details</a>
+									<button class="btn btn-sm btn-primary" onclick="BREW.addToCart({{ p.id }}, 1)"><i class="fa-solid fa-cart-plus me-1"></i>Add</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</section>
+
+<section id="services" class="py-5 bg-white">
+	<div class="container">
+		<h2 class="section-header">Why Choose Brew &amp; Sip</h2>
+		<div class="row g-4 mt-1">
+			<div class="col-md-3">
+				<div class="p-4 bg-light rounded-4 h-100">
+					<i class="fa-solid fa-bolt text-warning fs-3"></i>
+					<h6 class="mt-2">Instant Delivery</h6>
+					<p class="small-muted">Get your order in 30 minutes within a 10-mile radius.</p>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-4 bg-light rounded-4 h-100">
+					<i class="fa-solid fa-mug-hot text-warning fs-3"></i>
+					<h6 class="mt-2">Fresh Brew</h6>
+					<p class="small-muted">Brewed to order, delivered hot and delicious.</p>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-4 bg-light rounded-4 h-100">
+					<i class="fa-solid fa-shield-heart text-warning fs-3"></i>
+					<h6 class="mt-2">Contactless</h6>
+					<p class="small-muted">Safe, contactless delivery right to your door.</p>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-4 bg-light rounded-4 h-100">
+					<i class="fa-solid fa-leaf text-warning fs-3"></i>
+					<h6 class="mt-2">Premium Quality</h6>
+					<p class="small-muted">Curated beans and leaves from top growers.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="py-5">
+	<div class="container">
+		<h2 class="section-header">What Our Customers Say</h2>
+		<div class="row g-4 mt-1">
+			<div class="col-md-4">
+				<div class="p-4 bg-white shadow rounded-4 h-100">
+					<p class="mb-1">“The cold brew is heavenly and arrives piping cold every time.”</p>
+					<div class="small-muted">— Alex R.</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="p-4 bg-white shadow rounded-4 h-100">
+					<p class="mb-1">“Fast delivery and the chai tastes just like home.”</p>
+					<div class="small-muted">— Priya S.</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="p-4 bg-white shadow rounded-4 h-100">
+					<p class="mb-1">“Love the selection of artisanal beans. Fresh and flavorful.”</p>
+					<div class="small-muted">— Marco D.</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
