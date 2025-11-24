@@ -380,7 +380,7 @@ Have questions or suggestions?
 - **Issues:** Open a GitHub issue for bugs or feature requests
 - **Discussions:** Use GitHub Discussions for general questions
 - **Email:** shivammaster2020@gmail.com
-- **LinkedIn:** [@YourProfile](https://www.linkedin.com/in/shivamyadav-dev/)
+- **LinkedIn:** [@MyProfile](https://www.linkedin.com/in/shivamyadav-dev/)
 
 ---
 
